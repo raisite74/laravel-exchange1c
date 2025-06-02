@@ -1,5 +1,5 @@
 {
-  "name": "bigperson/laravel-exchange1c",
+  "name": "raisite74/laravel-exchange1c",
   "type": "library",
   "description": "Catalog Loader from 1c - CommerceML with laravel",
   "keywords": [
@@ -7,11 +7,11 @@
     "CommerceML",
     "Laravel"
   ],
-  "homepage": "https://github.com/bigperson",
+  "homepage": "https://github.com/raisite74/laravel-exchange1c",
   "license": "MIT",
   "authors": [
     {
-      "name": "Anton Kartsev",
+      "name": "Oleg Eltsov",
       "role": "Developer"
     }
   ],

@@ -11,7 +11,7 @@
 ## Установка
 Установить зависимости
 ```
-composer require bigperson/laravel-exchange1c
+composer require raisite74/laravel-exchange1c
 ```
 
 ### Для Laravel 5.4 и ниже 
