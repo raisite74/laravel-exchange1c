@@ -21,7 +21,7 @@
                 "shasum": ""
             },
             "require": {
-                "raisite74/commerceml": "^0.2.3",
+                "raisite74/commerceml": "^1.0.0",
                 "php": ">=7.1"
             },
             "require-dev": {
@@ -58,7 +58,7 @@
         },
         {
             "name": "raisite74/commerceml",
-            "version": "0.2.5",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/raisite74/php-commerceml.git",
