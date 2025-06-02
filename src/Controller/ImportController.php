@@ -66,15 +66,14 @@ class ImportController extends Controller
                     return response($response, 200, ['Content-Type', 'text/plain']);
                 }
 
-                CatalogServiceJob::dispatch(
+                CatalogServiceJob::dispatchSync(
                     $request->all(),
                     $request->session()->all()
-                )
-                    ->onQueue(config('exchange1c.queue'));
+                );
                 $response = "success\n";
 
                 $this->log(sprintf(
-                    'New request, type: %s, mode: %s, response: %s. CatalogServiceJob is started',
+                    'New request, type: %s, mode: %s, response: %s. CatalogServiceJob is ended',
                     $type,
                     $mode,
                     $response
@@ -92,10 +91,11 @@ class ImportController extends Controller
 
                 return response($response, 200, ['Content-Type', 'text/plain']);
             } else {
-                $message = sprintf('Logic for method %s not released', $type);
-                $this->log($message, 'error');
+                // $message = sprintf('Logic for method %s not released', $type);
+                // $this->log($message, 'error');
 
-                throw new \LogicException($message);
+                // throw new \LogicException($message);
+                exit;
             }
         } catch (Exchange1CException $e) {
             $this->log(

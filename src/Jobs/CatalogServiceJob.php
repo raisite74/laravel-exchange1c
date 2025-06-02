@@ -19,7 +19,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Http\Request;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Illuminate\Session\Store as SessionStore;
 
 class CatalogServiceJob implements ShouldQueue
 {
@@ -47,27 +47,44 @@ class CatalogServiceJob implements ShouldQueue
     public function handle(): void
     {
         $mode = $this->requestData['mode'];
+
+        // Создаём новый Request и наполняем его данными
         $request = (new Request())->replace($this->requestData);
-        $session = app()->make(Session::class);
-        $request->setSession($session);
+
+        // Создаём Laravel-сессию
+        /** @var SessionStore $session */
+        $session = app()->make(SessionStore::class);
+        $session->start();
+        $request->setLaravelSession($session);
+
+        // Добавляем sessionData
         $request->session()->replace($this->sessionData);
+
+        // Регистрируем fakeRequest в контейнере
         app()->instance('fakeRequest', $request);
+
+        // Привязываем fakeRequest к нужным сервисам
         app()
             ->when(AuthService::class)
             ->needs(Request::class)
             ->give('fakeRequest');
+
         app()
             ->when(CatalogService::class)
             ->needs(Request::class)
             ->give('fakeRequest');
+
         app()
             ->when(CategoryService::class)
             ->needs(Request::class)
             ->give('fakeRequest');
+
         app()
             ->when(OfferService::class)
             ->needs(Request::class)
             ->give('fakeRequest');
+
+        // Вызываем метод из нужного сервиса
         $service = app()->make(CatalogService::class);
         $service->$mode();
     }
